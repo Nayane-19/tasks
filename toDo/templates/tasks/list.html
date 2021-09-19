@@ -20,7 +20,9 @@
         <li class="task-item">
             <span><a class="task-link" href="/toDo/{{todo.id}}">{{todo.title}}</a></span>
             <span><i class="fas fa-trash"></i></span>
-            <span><i class="fas fa-edit"></i></span>
+            <a href="edit/{{todo.id}}">
+                <span><i class="fas fa-edit"></i></span>
+            </a>
         </li>
         {% endfor %}
     </ul>
