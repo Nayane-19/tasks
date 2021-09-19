@@ -14,10 +14,10 @@ def todoList(request):
     search = request.GET.get('search')
 
     if search:
-        todos = ToDo.objects.filter(title__icontains=search)
+        todos = ToDo.objects.filter(title__icontains=search, user=request.user)
 
     else:
-        todos_list = ToDo.objects.all().order_by('-created_at')
+        todos_list = ToDo.objects.all().order_by('-created_at').filter(user=request.user)
 
         paginator = Paginator(todos_list, 5)
 
