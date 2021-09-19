@@ -9,13 +9,21 @@ from .models import ToDo
 # Create your views here.
 
 def todoList(request):
-    todos_list = ToDo.objects.all().order_by('-created_at')
-    paginator = Paginator(todos_list, 5)
 
-    page = request.GET.get('page')
+    search = request.GET.get('search')
 
-    todos = paginator.get_page(page)
-    
+    if search:
+        todos = ToDo.objects.filter(title__icontains=search)
+
+    else:
+        todos_list = ToDo.objects.all().order_by('-created_at')
+
+        paginator = Paginator(todos_list, 5)
+
+        page = request.GET.get('page')
+
+        todos = paginator.get_page(page)
+
     return render(request, 'tasks/list.html', {'todos': todos})
 
 def todoView(request, id):

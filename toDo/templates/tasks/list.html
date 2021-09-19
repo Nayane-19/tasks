@@ -11,9 +11,11 @@
         </div>
     </a>
     <div class="col-9 search-div">
-        <input class="form-control" type="text" id="search" name="search"
-            placeholder="Digite o nome da tarefa que deseja buscar">
-        <i class="fas fa-search"></i>
+        <form method="GET" id="search-form">
+            <input class="form-control" type="text" id="search" name="search" value="{{request.GET.search}}"
+                placeholder="Digite o nome da tarefa que deseja buscar">
+            <i class="fas fa-search" id="search-btn"></i>
+        </form>
     </div>
     {% if messages %}
     <ul class="messages">
