@@ -3,5 +3,57 @@
 {% block title %}Lista de Tarefas{% endblock%}
 
 {% block content %}
-<h1>Lista de Tarefas</h1>
+<div class="offset-1 col-10 list-div">
+    <h1>Lista de Tarefas</h1>
+    <a id="add-link" href="newtask/">
+        <div class="col-2 add-div">
+            <i class="fas fa-plus"></i> Adicionar tarefa
+        </div>
+    </a>
+    <div class="col-9 search-div">
+        <form method="GET" id="search-form">
+            <input class="form-control" type="text" id="search" name="search" value="{{request.GET.search}}"
+                placeholder="Digite o nome da tarefa que deseja buscar">
+            <i class="fas fa-search" id="search-btn"></i>
+        </form>
+    </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %}class="alert alert-{{message.tags}}" {% endif %}>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <ul class="task-list">
+        {% for todo in todos %}
+        <li class="task-item">
+            <span><a class="task-link" href="/toDo/{{todo.id}}">{{todo.title}}</a></span>
+            <a href="delete/{{todo.id}}" class="delete-btn">
+                <span><i class="fas fa-trash"></i></span>
+            </a>
+            <a href="edit/{{todo.id}}">
+                <span><i class="fas fa-edit"></i></span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="pagination">
+        <span class="step-links">
+            {% if todos.has_previous %}
+            <a href="?page={{todos.previous_page_number}}"><i class="fas fa-arrow-left"></i></a>
+            {% endif %}
+
+            {% if todos.paginator.num_pages %}
+            <span class="current">
+                {{todos.number}} de {{todos.paginator.num_pages}}
+            </span>
+            {% endif %}
+
+            {% if todos.has_next %}
+            <a href="?page={{todos.next_page_number}}"><i class="fas fa-arrow-right"></i></a>
+            {% endif %}
+        </span>
+    </div>
+
+</div>
 {% endblock %}
