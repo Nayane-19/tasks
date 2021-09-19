@@ -40,6 +40,10 @@
 
 /* Botão de adicionar */
 
+#add-link{
+    text-decoration: none;
+}
+
 .add-div {
     background-color: #3476e2;
     cursor: pointer;
@@ -88,6 +92,10 @@
     height: 50px;
     padding-top: 10px;
     border-bottom: 1px dashed #ccc;
+}
+
+.task-link {
+    text-decoration: none!important;
 }
 
 .fas.fa-trash, .fas.fa-edit{
