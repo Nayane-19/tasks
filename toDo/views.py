@@ -2,13 +2,20 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .forms import ToDoForm
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from .models import ToDo
 
 # Create your views here.
 
 def todoList(request):
-    todos = ToDo.objects.all().order_by('-created_at')
+    todos_list = ToDo.objects.all().order_by('-created_at')
+    paginator = Paginator(todos_list, 5)
+
+    page = request.GET.get('page')
+
+    todos = paginator.get_page(page)
+    
     return render(request, 'tasks/list.html', {'todos': todos})
 
 def todoView(request, id):
@@ -50,7 +57,7 @@ def deleteTask(request, id):
     todo.delete()
 
     messages.info(request, 'Tarefa deletada com sucesso')
-    
+
     return redirect('/')
 
 def helloWorld(request):
