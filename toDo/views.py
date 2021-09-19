@@ -12,9 +12,13 @@ from .models import ToDo
 def todoList(request):
 
     search = request.GET.get('search')
+    filter = request.GET.get('filter')
 
     if search:
         todos = ToDo.objects.filter(title__icontains=search, user=request.user)
+    
+    elif filter:
+        todos = ToDo.objects.filter(done=filter, user=request.user)
 
     else:
         todos_list = ToDo.objects.all().order_by('-created_at').filter(user=request.user)
