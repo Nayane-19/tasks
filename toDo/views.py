@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from .forms import ToDoForm
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -7,7 +8,7 @@ from django.core.paginator import Paginator
 from .models import ToDo
 
 # Create your views here.
-
+@login_required
 def todoList(request):
 
     search = request.GET.get('search')
@@ -26,10 +27,12 @@ def todoList(request):
 
     return render(request, 'tasks/list.html', {'todos': todos})
 
+@login_required
 def todoView(request, id):
     todo = get_object_or_404(ToDo, pk=id)
     return render(request, 'tasks/task.html', {'todo': todo})
 
+@login_required
 def newTask(request):
     if request.method == 'POST':
         form = ToDoForm(request.POST)
@@ -44,7 +47,7 @@ def newTask(request):
         form = ToDoForm()
         return render(request, 'tasks/addtask.html', {'form': form})
 
-
+@login_required
 def editTask(request, id):
     todo = get_object_or_404(ToDo, pk=id)
     form = ToDoForm(instance=todo)
@@ -60,6 +63,7 @@ def editTask(request, id):
     else:
         return render(request, 'tasks/edittask.html', {'form': form, 'todo': todo})
 
+@login_required
 def deleteTask(request, id):
     todo = get_object_or_404(ToDo, pk=id)
     todo.delete()

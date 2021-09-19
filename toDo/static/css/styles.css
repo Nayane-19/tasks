@@ -160,3 +160,9 @@ footer p {
 .form-group{
     margin-bottom: 15px;
 }
+
+/* login */
+
+.auth-card {
+    margin-bottom: 30px;
+}
