@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ToDoForm
 from django.contrib import messages
 from django.core.paginator import Paginator
+import datetime
 
 from .models import ToDo
 
@@ -13,6 +14,9 @@ def todoList(request):
 
     search = request.GET.get('search')
     filter = request.GET.get('filter')
+    todoDoneRecently = ToDo.objects.filter(done='done', updated_at__gt=datetime.datetime.now()-datetime.timedelta(days=30)).count()
+    todoDone = ToDo.objects.filter(done='done', user=request.user).count()
+    todoDoing = ToDo.objects.filter(done='doing', user=request.user).count()
 
     if search:
         todos = ToDo.objects.filter(title__icontains=search, user=request.user)
@@ -29,7 +33,7 @@ def todoList(request):
 
         todos = paginator.get_page(page)
 
-    return render(request, 'tasks/list.html', {'todos': todos})
+    return render(request, 'tasks/list.html', {'todos': todos, 'todoDoneRecently': todoDoneRecently, 'todoDone': todoDone, 'todoDoing': todoDoing})
 
 @login_required
 def todoView(request, id):
