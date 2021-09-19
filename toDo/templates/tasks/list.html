@@ -26,13 +26,20 @@
     {% endif %}
     <ul class="task-list">
         {% for todo in todos %}
-        <li class="task-item">
+        {% if todo.done == 'doing' %}
+        <li class="task-item ">
+            {% else %}
+        <li class="task-item done">
+            {% endif %}
             <span><a class="task-link" href="/toDo/{{todo.id}}">{{todo.title}}</a></span>
             <a href="delete/{{todo.id}}" class="delete-btn">
                 <span><i class="fas fa-trash"></i></span>
             </a>
             <a href="edit/{{todo.id}}">
                 <span><i class="fas fa-edit"></i></span>
+            </a>
+            <a href="changestatus/{{todo.id}}">
+                <span><i class="fas fa-check"></i></span>
             </a>
         </li>
         {% endfor %}
