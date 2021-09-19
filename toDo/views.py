@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .forms import ToDoForm
+from django.contrib import messages
 
 from .models import ToDo
 
@@ -43,6 +44,14 @@ def editTask(request, id):
            return render(request, 'tasks/edittask.html', {'form': form, 'todo': todo}) 
     else:
         return render(request, 'tasks/edittask.html', {'form': form, 'todo': todo})
+
+def deleteTask(request, id):
+    todo = get_object_or_404(ToDo, pk=id)
+    todo.delete()
+
+    messages.info(request, 'Tarefa deletada com sucesso')
+    
+    return redirect('/')
 
 def helloWorld(request):
     return HttpResponse('Hello World!')

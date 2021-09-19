@@ -15,11 +15,20 @@
             placeholder="Digite o nome da tarefa que deseja buscar">
         <i class="fas fa-search"></i>
     </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %}class="alert alert-{{message.tags}}" {% endif %}>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <ul class="task-list">
         {% for todo in todos %}
         <li class="task-item">
             <span><a class="task-link" href="/toDo/{{todo.id}}">{{todo.title}}</a></span>
-            <span><i class="fas fa-trash"></i></span>
+            <a href="delete/{{todo.id}}">
+                <span><i class="fas fa-trash"></i></span>
+            </a>
             <a href="edit/{{todo.id}}">
                 <span><i class="fas fa-edit"></i></span>
             </a>

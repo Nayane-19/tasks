@@ -127,3 +127,12 @@ footer p {
     font-size: 35px;
     color: #ce8a90;
 }
+
+/* Messages */ 
+    ul.messages {
+        padding: 0;
+    }
+
+    ul.messages li {
+        list-style: none;
+    }
